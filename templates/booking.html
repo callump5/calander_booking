@@ -1,0 +1,44 @@
+
+
+<div id="content-main">
+    <ul class="object-tools">
+        <li>
+            <a href="{{ previous_month }}">Previous Month</a>
+        </li>
+        <li>
+            <a href="{{ next_month }}">Next Month</a>
+        </li>
+    </ul>
+
+        <h1>{{ month }}</h1>
+    <table id="calendar">
+
+        <tr id="calendar-header">
+            {% for name in calender.day_name  %}
+                <th>{{ name }}</th>
+            {% endfor %}
+        </tr>
+
+
+        <tr>
+        {% for days in month_days  %}
+            <td title="{{ days }}">{{ days }}</td>
+
+            {% if forloop.counter|divisibleby:7 %}
+                </tr>
+                <tr>
+            {% endif %}
+        {% endfor %}
+        </tr>
+
+
+    </table>
+
+</div>
+
+<script type="text/javascript">
+
+ $("[title~='0']").css('display', 'none')
+
+
+</script>

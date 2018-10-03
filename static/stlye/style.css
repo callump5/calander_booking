@@ -1,0 +1,11 @@
+#calendar {
+    background-color: royalblue;
+}
+
+#calendar-header {
+}
+
+#calendar th, #calendar td {
+    padding: 20px;
+    text-align: center;
+}
