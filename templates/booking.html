@@ -1,44 +1,28 @@
+{% extends 'index.html' %}
+
+{% block content %}
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+      $( function() {
+          $( "#id_day" ).datepicker({
+              beforeShowDay: function(date) {
+                  var day = date.getDay();
+                  return [(day != 0), ''];
+              }
+          });
+      });
+
+    </script>
 
 
-<div id="content-main">
-    <ul class="object-tools">
-        <li>
-            <a href="{{ previous_month }}">Previous Month</a>
-        </li>
-        <li>
-            <a href="{{ next_month }}">Next Month</a>
-        </li>
-    </ul>
+    <h1>New post</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-info">Save</button>
+    </form>
 
-        <h1>{{ month }}</h1>
-    <table id="calendar">
-
-        <tr id="calendar-header">
-            {% for name in calender.day_name  %}
-                <th>{{ name }}</th>
-            {% endfor %}
-        </tr>
-
-
-        <tr>
-        {% for days in month_days  %}
-            <td title="{{ days }}">{{ days }}</td>
-
-            {% if forloop.counter|divisibleby:7 %}
-                </tr>
-                <tr>
-            {% endif %}
-        {% endfor %}
-        </tr>
-
-
-    </table>
-
-</div>
-
-<script type="text/javascript">
-
- $("[title~='0']").css('display', 'none')
-
-
-</script>
+{% endblock %}
