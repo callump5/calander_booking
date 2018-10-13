@@ -1,0 +1,14 @@
+boto
+dj-database-url
+Django
+django-bootstrap-form
+django-bootstrap-forms
+django-crispy-forms
+django-forms-bootstrap
+django-storages
+django-tinymce
+gunicorn
+Pillow
+pytz
+PyYAML
+whitenoise

@@ -4,6 +4,12 @@ from datetime import time
 
 # Create your models here.
 
+class Session(models.Model):
+    name = models.CharField(max_length=200)
+    slots = models.IntegerField()
+
+    def __unicode__(self):
+        return self.name
 
 class Booking(models.Model):
 
@@ -19,13 +25,13 @@ class Booking(models.Model):
     )
 
 
-    day = models.DateField(u'Day of booking', help_text='Day of booking')
+    day = models.DateField(u'Booking date')
 
 
-    start_time = models.TimeField(u'Booking slot', help_text='Booking slot', choices=TIME_CHOICES, max_length=200)
-    end_time = models.TimeField(u'Finish time', help_text='Finish Time', choices=TIME_CHOICES, max_length=200)
-    notes = models.TextField(u'Notes', help_text='Notes', blank=True, null=True)
+    start_time = models.TimeField(u'Booking time', choices=TIME_CHOICES, max_length=200)
+    notes = models.CharField(u'Notes', blank=True, null=True, max_length=500)
 
+    session_class = models.ForeignKey(Session, related_name='class_type')
 
     class Meta:
         verbose_name = 'Booking'
@@ -35,27 +41,20 @@ class Booking(models.Model):
         return str(self.day) + ' - ' + str(self.start_time)
 
 
-    def check_overlap(self, fixed_start, fixed_end, new_start, new_end):
-        overlap = False
-        if new_start == fixed_end: # Edge case
-            overlap = False
-        elif new_start == fixed_start or new_end == fixed_end:
-            overlap = True
-        elif(new_start >= fixed_start and new_start <= fixed_end) or (new_end >= fixed_start and new_end <= fixed_end): #Inner limits
-            overlap = True
-        elif new_start <= fixed_start and new_end >= fixed_end: # Outer limits
-            overlap = True
+    def check_availability(self, taken_slots, max_slots):
 
-        return overlap
+        full = False
+
+        if taken_slots >= max_slots:
+            full = True
+
+        return full
+
 
     def clean(self):
-        if self.end_time <= self.start_time:
-            raise ValidationError('Ending must be after start time!')
 
-        events = Booking.objects.filter(day=self.day)
+        events = Booking.objects.filter(day=self.day, start_time=self.start_time, session_class=self.session_class).count()
 
-        if events.exists():
-            for event in events:
-                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
-                    raise ValidationError('There is an overlap with another booking!: ' + str(event.day)
-                                          + ' ' + str(event.start_time) + ' - ' + str(event.end_time))
+        if events:
+            if self.check_availability(events, self.session_class.slots):
+                raise ValidationError('Too many bookings')

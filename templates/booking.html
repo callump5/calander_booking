@@ -1,28 +1,18 @@
-{% extends 'index.html' %}
-
-{% block content %}
-      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-      $( function() {
-          $( "#id_day" ).datepicker({
-              beforeShowDay: function(date) {
-                  var day = date.getDay();
-                  return [(day != 0), ''];
-              }
-          });
-      });
-
-    </script>
+{% load bootstrap_tags %}
 
 
-    <h1>New post</h1>
-    <form method="POST">
+<div class="row">
+    <form method="POST" class="col-md-6">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|as_bootstrap }}
         <button type="submit" class="btn btn-info">Save</button>
     </form>
 
-{% endblock %}
+    <p class="col-md-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium architecto aspernatur assumenda, consequatur delectus dicta distinctio dolor doloribus eveniet inventore iure laudantium obcaecati quibusdam, quisquam ratione saepe vero voluptates?
+
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet animi asperiores dolor, esse magni maxime nostrum odio quo vel. Blanditiis consequatur distinctio earum illum modi, placeat provident repellendus velit.
+
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet animi asperiores dolor, esse magni maxime nostrum odio quo vel. Blanditiis consequatur distinctio earum illum modi, placeat provident repellendus velit.
+
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet facilis impedit ipsam ipsum iste, quos voluptas? Aut consectetur consequatur earum itaque laudantium nemo neque sequi? Ad fuga hic necessitatibus tenetur!</p>
+</div>
