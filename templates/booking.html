@@ -10,7 +10,10 @@
       //]]>
   </script>
   <script type="text/javascript" src="/static/js/stripe.js"></script>
+
 {% endblock %}
+
+
 
 {% block content %}
 
@@ -31,22 +34,21 @@
 
 
     <script type="text/javascript">
-    $("#div_id_day").addClass('wrap-1');
-    $("#div_id_start_time").addClass('wrap-1');
-    $("#div_id_notes").addClass('wrap-1');
-    $("#div_id_session_class").addClass('wrap-1');
+        $("#div_id_day").addClass('wrap-1');
+        $("#div_id_start_time").addClass('wrap-1');
+        $("#div_id_notes").addClass('wrap-1');
+        $("#div_id_session_class").addClass('wrap-1');
 
-    $('.wrap-1').wrapAll("<div class='col-md-6'>");
-
-
-
-    $("#div_id_credit_card_number").addClass('wrap-2');
-    $("#div_id_cvv").addClass('wrap-2');
-    $("#div_id_expiry_month").addClass('wrap-2');
-    $("#div_id_expiry_year").addClass('wrap-2');
+        $('.wrap-1').wrapAll("<div class='col-md-6'>");
 
 
-    $('.wrap-2').wrapAll("<div class='col-md-6'>");
 
+        $("#div_id_credit_card_number").addClass('wrap-2');
+        $("#div_id_cvv").addClass('wrap-2');
+        $("#div_id_expiry_month").addClass('wrap-2');
+        $("#div_id_expiry_year").addClass('wrap-2');
+
+
+        $('.wrap-2').wrapAll("<div class='col-md-6'>");
     </script>
 {% endblock %}
