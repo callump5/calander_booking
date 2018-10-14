@@ -6,10 +6,11 @@ from datetime import time
 
 class Session(models.Model):
     name = models.CharField(max_length=200)
+    price = models.FloatField()
     slots = models.IntegerField()
 
     def __unicode__(self):
-        return self.name
+        return str(self.name + ' - ' + str(self.price))
 
 class Booking(models.Model):
 
@@ -32,6 +33,8 @@ class Booking(models.Model):
     notes = models.CharField(u'Notes', blank=True, null=True, max_length=500)
 
     session_class = models.ForeignKey(Session, related_name='class_type')
+
+    stripe_id = models.CharField(max_length=40, default='')
 
     class Meta:
         verbose_name = 'Booking'

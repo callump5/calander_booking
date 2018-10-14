@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 from django.contrib.messages import constants as messages
+import stripe
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -145,5 +146,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-
+stripe.api_key = 'sk_test_0dIkIVyLfsI3ImagRFfr83bR'
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_8lYs6KBXkPJjSmTYXQAVTfXr')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_0dIkIVyLfsI3ImagRFfr83bR')

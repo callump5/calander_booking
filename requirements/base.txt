@@ -12,3 +12,4 @@ Pillow
 pytz
 PyYAML
 whitenoise
+stripe

@@ -1,18 +1,54 @@
+{% extends 'index.html' %}
+{% load static %}
+
 {% load bootstrap_tags %}
 
 
-<div class="row">
-    <form method="POST" class="col-md-6">
+{% block head_js %}
+  <script src="https://js.stripe.com/v2/" type="text/javascript"></script>
+  <script type="text/javascript">
+      //<![CDATA[
+      Stripe.publishableKey = '{{ publishable }}';
+      //]]>
+  </script>
+  <script type="text/javascript" src="/static/js/stripe.js"></script>
+{% endblock %}
+
+{% block content %}
+
+
+    <form method="POST" id="booking-form">
+
+    <div class="row">
         {% csrf_token %}
         {{ form|as_bootstrap }}
-        <button type="submit" class="btn btn-info">Save</button>
+        <div id="credit-card-errors" style="display:none">
+            <div class="alert-message block-message error" id="stripe-error-message"></div></div>
+            <div class="form-group">
+                <input class="btn btn-primary" id="validate_card_btn" name="commit" type="submit" value="Validate Credit Card">
+            </div>
+        </div>
     </form>
 
-    <p class="col-md-6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusantium architecto aspernatur assumenda, consequatur delectus dicta distinctio dolor doloribus eveniet inventore iure laudantium obcaecati quibusdam, quisquam ratione saepe vero voluptates?
 
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet animi asperiores dolor, esse magni maxime nostrum odio quo vel. Blanditiis consequatur distinctio earum illum modi, placeat provident repellendus velit.
 
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus amet animi asperiores dolor, esse magni maxime nostrum odio quo vel. Blanditiis consequatur distinctio earum illum modi, placeat provident repellendus velit.
+    <script type="text/javascript">
+    $("#div_id_day").addClass('wrap-1');
+    $("#div_id_start_time").addClass('wrap-1');
+    $("#div_id_notes").addClass('wrap-1');
+    $("#div_id_session_class").addClass('wrap-1');
 
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet facilis impedit ipsam ipsum iste, quos voluptas? Aut consectetur consequatur earum itaque laudantium nemo neque sequi? Ad fuga hic necessitatibus tenetur!</p>
-</div>
+    $('.wrap-1').wrapAll("<div class='col-md-6'>");
+
+
+
+    $("#div_id_credit_card_number").addClass('wrap-2');
+    $("#div_id_cvv").addClass('wrap-2');
+    $("#div_id_expiry_month").addClass('wrap-2');
+    $("#div_id_expiry_year").addClass('wrap-2');
+
+
+    $('.wrap-2').wrapAll("<div class='col-md-6'>");
+
+    </script>
+{% endblock %}
