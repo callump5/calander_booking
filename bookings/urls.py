@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
-from  .views import  get_index
+from  .views import  get_home, get_booking_system
 urlpatterns = [
 
-    url(r'^$', get_index, name='home')
+    url(r'^$', get_home, name='home'),
+    url(r'^booking/(?P<session_name>\d+)/$', get_booking_system, name='book')
 ]

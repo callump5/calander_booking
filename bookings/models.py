@@ -7,13 +7,14 @@ from datetime import time
 class Session(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
+    image = models.ImageField(upload_to='images')
+    description = models.TextField()
     slots = models.IntegerField()
 
     def __unicode__(self):
-        return str(self.name + ' - ' + str(self.price))
+        return self.name
 
 class Booking(models.Model):
-
 
     TIME_CHOICES = (
         (time(11, 00, 00), u'11 AM'),

@@ -15,8 +15,6 @@ class BookingForm(forms.ModelForm):
         'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
     ]
 
-    CLASSES = [(i, str(i.name + ' - ' + str(i.price))) for i in Session.objects.all()]
-
     MONTH_CHOICES = list(enumerate(MONTHS, 1))
     YEAR_CHOICES = [(i, i) for i in range(2016, 2027)]
 

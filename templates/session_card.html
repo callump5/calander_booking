@@ -1,0 +1,9 @@
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{ sesh.image.url }}" alt="Card image cap">
+  <div class="card-body">
+        <h5 class="card-title">{{ sesh.name }}</h5>
+        <h6 class="card-text">£{{ sesh.price }}</h6>
+        <p class="card-text">{{ sesh.description|truncatewords:22 }}</p>
+        <a class="btn btn-primary" href="/booking/{{ sesh.id }}">Book a Slot!</a>
+    </div>
+</div>
