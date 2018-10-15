@@ -9,3 +9,29 @@
     padding: 20px;
     text-align: center;
 }
+
+.card-body {
+    padding: 10px;
+}
+
+.card img {
+    max-height: 400px;
+}
+
+
+.my-container {
+    width: 70%;
+    margin: 0 auto;
+}
+.my-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.my-row div.card:first-child {
+    margin-left: 0;
+}
+.my-row div.card:last-child {
+    margin-left: 0;
+}
