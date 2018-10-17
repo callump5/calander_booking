@@ -33,7 +33,7 @@ class Booking(models.Model):
     start_time = models.TimeField(u'Booking time', choices=TIME_CHOICES, max_length=200)
     notes = models.CharField(u'Notes', blank=True, null=True, max_length=500)
 
-    session_class = models.ForeignKey(Session, related_name='class_type')
+    type_class = models.OneToOneField(Session)
 
     stripe_id = models.CharField(max_length=40, default='')
 
@@ -57,8 +57,8 @@ class Booking(models.Model):
 
     def clean(self):
 
-        events = Booking.objects.filter(day=self.day, start_time=self.start_time, session_class=self.session_class).count()
+        events = Booking.objects.filter(day=self.day, start_time=self.start_time, type_class=self.type_class).count()
 
         if events:
-            if self.check_availability(events, self.session_class.slots):
+            if self.check_availability(events, self.type_class.slots):
                 raise ValidationError('Too many bookings')

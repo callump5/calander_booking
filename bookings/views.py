@@ -22,22 +22,22 @@ def get_home(request):
 
 
 def get_booking_system(request, session_name):
+
+    session_name = Session.objects.get(id=session_name)
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
+            form.session_class = form.cleaned_data['type_class']
             try:
-                charge = int(form.cleaned_data['session_class'].price * 100)
+                charge = int(session_name.price * 100)
                 customer = stripe.Charge.create(
                     amount= charge,
                     currency="GBP",
-                    description=form.cleaned_data['session_class'],
+                    description=form.cleaned_data['type_class'],
                     card=form.cleaned_data['stripe_id'],
                 )
                 if customer.paid:
-                    session = Session.objects.get(id=session_name)
-                    new_form = form.save(commit=False)
-                    new_form.session_type = session
-                    new_form.save()
+                    form.save()
                 else:
                     messages.error(request, "We were unable to take a payment with that card!")
             except stripe.error.CardError, e:
@@ -46,9 +46,10 @@ def get_booking_system(request, session_name):
             messages.success(request, 'Thank you for your booking!')
             return redirect('home')
     else:
+
+
         form = BookingForm()
-    session_name = Session.objects.get(id=session_name)
-    charge = 0
-    args = {'form': form, 'session_name': session_name, 'publishable': settings.STRIPE_PUBLISHABLE, 'charge': charge}
+
+    args = {'form': form, 'publishable': settings.STRIPE_PUBLISHABLE, 'session_name': session_name}
     args.update(csrf(request))
     return render(request, 'booking.html', args)

@@ -5,7 +5,7 @@ from .models import Booking,Session
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ('day', 'start_time', 'notes', 'session_class', 'stripe_id')
+        fields = ('day', 'start_time', 'notes', 'type_class', 'stripe_id')
 
     day = forms.DateField(
         widget=forms.widgets.DateInput(format="%m/%d/%Y"))
@@ -23,6 +23,8 @@ class BookingForm(forms.ModelForm):
     expiry_month = forms.ChoiceField(choices=MONTH_CHOICES)
     expiry_year = forms.ChoiceField(choices=YEAR_CHOICES)
 
+    type_class = forms.CharField(widget=forms.HiddenInput)
     stripe_id = forms.CharField(widget=forms.HiddenInput)
+
 
 

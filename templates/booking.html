@@ -41,7 +41,7 @@
         $("#div_id_day").addClass('wrap-1');
         $("#div_id_start_time").addClass('wrap-1');
         $("#div_id_notes").addClass('wrap-1');
-        $("#div_id_session_class").addClass('wrap-1').attr('value', '{{ session_name.id }}');
+        $("#div_id_type_class").addClass('wrap-1');
 
         $('.wrap-1').wrapAll("<div class='col-md-6'>");
 
@@ -56,5 +56,6 @@
         $('.wrap-2').wrapAll("<div class='col-md-6'>");
 
 
+        $('#id_type_class').attr('value', '{{ session_name.id }}');
     </script>
 {% endblock %}
