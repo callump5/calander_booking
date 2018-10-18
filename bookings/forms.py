@@ -1,5 +1,5 @@
 from django import forms
-from .models import Booking,Session
+from .models import Booking,Product
 
 
 class BookingForm(forms.ModelForm):
@@ -23,8 +23,6 @@ class BookingForm(forms.ModelForm):
     expiry_month = forms.ChoiceField(choices=MONTH_CHOICES)
     expiry_year = forms.ChoiceField(choices=YEAR_CHOICES)
 
-    type_class = forms.CharField(widget=forms.HiddenInput)
     stripe_id = forms.CharField(widget=forms.HiddenInput)
-
 
 

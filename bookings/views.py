@@ -10,24 +10,23 @@ import datetime
 
 from django.conf import settings
 from .forms import BookingForm
-from .models import Session
+from .models import Product
 
 
 # Create your views here.
 
 def get_home(request):
-    session = Session.objects.all()
+    session = Product.objects.all()
     args = {'session': session}
     return render(request, 'home.html', args)
 
 
-def get_booking_system(request, session_name):
+def get_booking_system(request, session_id):
 
-    session_name = Session.objects.get(id=session_name)
+    session_name = Product.objects.get(id=session_id)
     if request.method == 'POST':
         form = BookingForm(request.POST)
         if form.is_valid():
-            form.session_class = form.cleaned_data['type_class']
             try:
                 charge = int(session_name.price * 100)
                 customer = stripe.Charge.create(
@@ -37,7 +36,9 @@ def get_booking_system(request, session_name):
                     card=form.cleaned_data['stripe_id'],
                 )
                 if customer.paid:
-                    form.save()
+                    new_form = form.save(False)
+                    new_form.type_class = form.cleaned_data['type_class']
+                    new_form.save()
                 else:
                     messages.error(request, "We were unable to take a payment with that card!")
             except stripe.error.CardError, e:
@@ -46,10 +47,7 @@ def get_booking_system(request, session_name):
             messages.success(request, 'Thank you for your booking!')
             return redirect('home')
     else:
-
-
         form = BookingForm()
-
-    args = {'form': form, 'publishable': settings.STRIPE_PUBLISHABLE, 'session_name': session_name}
+    args = {'form': form, 'session_id': session_id, 'session_name':session_name, 'publishable': settings.STRIPE_PUBLISHABLE}
     args.update(csrf(request))
     return render(request, 'booking.html', args)

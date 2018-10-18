@@ -4,7 +4,7 @@ from datetime import time
 
 # Create your models here.
 
-class Session(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
     image = models.ImageField(upload_to='images')
@@ -33,7 +33,7 @@ class Booking(models.Model):
     start_time = models.TimeField(u'Booking time', choices=TIME_CHOICES, max_length=200)
     notes = models.CharField(u'Notes', blank=True, null=True, max_length=500)
 
-    type_class = models.OneToOneField(Session)
+    type_class = models.ForeignKey(Product)
 
     stripe_id = models.CharField(max_length=40, default='')
 

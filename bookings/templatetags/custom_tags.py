@@ -3,7 +3,7 @@ from django import template
 from django.urls import reverse
 
 
-from ..models import Session, Booking
+from ..models import Product, Booking
 
 register = template.Library()
 
