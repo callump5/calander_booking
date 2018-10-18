@@ -38,7 +38,7 @@
 
 
     <script type="text/javascript">
-    $(window).onbeforeunload('load', function(){
+    $(window).ready(function(){
         $('#id_type_class option').attr('selected', 'selected');
         $("#div_id_day").addClass('wrap-1');
         $("#div_id_start_time").addClass('wrap-1');
@@ -58,6 +58,9 @@
         $('.wrap-2').wrapAll("<div class='col-md-6'>");
     });
 
+    $(window).beforeunload(function () {
+        $('#id_type_class option').attr('selected', 'selected');
+    })
 
     </script>
 {% endblock %}
